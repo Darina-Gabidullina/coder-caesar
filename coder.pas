@@ -1,5 +1,6 @@
 program Coder_and_decoder; 
 
+
 procedure cipher;{Зашифровка }   
 var
   shift: integer;
