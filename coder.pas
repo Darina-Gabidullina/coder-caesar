@@ -1,4 +1,4 @@
-program Coder_and_decoder;
+﻿program Coder_and_decoder;
 
 function cipher(shift1: integer; inputText1: string): string;{Зашифровка }   
 var
@@ -38,8 +38,8 @@ begin
   for i := 1 to length(inputText1) do
   begin
     symbol1 := inputText1[i];
-    number := ord(symbol1) + shift1; 
-    if number > 97 then
+    number := ord(symbol1) - shift1; 
+    if number < 97 then
     begin
       outputSymbol := (chr(number + 26));      
     end
@@ -63,7 +63,7 @@ begin
   readln(inputText);
   writeln('Выберете  что вы хотите сделать, зашифровать ( напишите 1) или расшифровать (напишите 2 ) текст. Зашифровывается только англ. алфавит.');
   readln(choose);
-  if choose > 1 then
+  if choose  <2  then
     outletText := cipher(shift, inputText)
   else
     outletText := decipher(shift, inputText);
