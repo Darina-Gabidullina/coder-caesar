@@ -1,70 +1,51 @@
-program Coder_and_decoder; 
+program Coder_and_decoder;
 
-procedure cipher;{Зашифровка }   
+function translate(number: byte; shift: integer): byte;
+begin
+  translate := (((number - 97) + shift + 26) mod 26) + 97;
+end;
+
+function cipher(shift: integer; inputText: string): string;   
 var
-  shift: integer;
   number: byte;
   i: integer;
-  inputText: string;
   symbol: char;
+  outputSymbol: char;
   outletText: string;
+begin
+  i := 1;
+  for i := 1 to length(inputText) do
+  begin
+    symbol := inputText[i];
+    if symbol = ' ' then
+      number := 32
+    else
+      number := translate(ord(symbol), shift);
+    outputSymbol := chr(number);
+    outletText := outletText + outputSymbol;
+    cipher := outletText;
+  end;
+end;
+
+procedure main();
+var
+  choose: integer;
+  shift: integer;
+  inputText, outletText: string;
 begin
   writeln('Напишите кол-во смещений. ');
   readln(shift);
   writeln('Напишите текст. Пробелы будут заменятся другими символами.');
   readln(inputText);
-  writeln('Шифр==> ');
-  i := 1;
-  for i := 1 to length(inputText) do
-  begin
-    symbol := inputText[i];
-    number := ord(symbol) + shift; 
-    if number > 122 then
-    begin
-      write(chr(number - 26))       
-    end
-    else
-      write(chr(number));
-  end;
-end;
-
-
-procedure decipher;{дешифровка }
-var
-  shift: integer;
-  number: byte;
-  i: integer;
-  inputText: string;
-  symbol: char;
-  outletText: string;
-begin
-  writeln('Напишите кол-во смещений.');
-  readln(shift);
-  writeln('Напишите текст. Пробелы будут заменятся другими символами.');
-  readln(inputText);
-  writeln('Шифр==> ');
-  i := 1;
-  for i := 1 to length(inputText) do
-  begin
-    symbol := inputText[i];
-    number := ord(symbol) - shift;
-    if number < 97 then
-    begin
-      write(chr(number +26))
-    end
-    else
-      write(chr(number));
-  end;
-end;
-
-var
-  symbol, outletText: char;
-  choose: integer;
-
-begin
-  writeln('Выберете  что вы хотите сделать, зашифровать ( напишите 1) или расшифровать (напишите 2 ) текст. Зашифровывается только англ. алфавит.');
+  writeln('Зашифровать-1, Дешифровать-2.Только англ. алфавит.');
   readln(choose);
-  if (choose = 1) then
-    cipher
-  else decipher;
+  if choose < 2 then
+    outletText := cipher(shift, inputText)
+  else
+    outletText := cipher(-shift, inputText);
+  writeln(outletText);
+end;
+
+begin
+  main();
 end.
