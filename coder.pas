@@ -1,6 +1,6 @@
-ï»¿program Coder_and_decoder;
+program Coder_and_decoder;
 
-function cipher(shift1: integer; inputText1: string): string;{Ð—Ð°ÑˆÐ¸Ñ„Ñ€Ð¾Ð²ÐºÐ° }   
+function cipher(shift1: integer; inputText1: string): string;{Çàøèôðîâêà }   
 var
   number: byte;
   i: integer;
@@ -8,24 +8,25 @@ var
   outputSymbol: char;
   outletText1: string;
 begin
-  writeln('Ð¨Ð¸Ñ„Ñ€==> ');
   i := 1;
   for i := 1 to length(inputText1) do
   begin
     symbol1 := inputText1[i];
-    number := ord(symbol1) + shift1; 
-    if number > 122 then
+    if ord(symbol1) = 32 then 
     begin
-      outputSymbol := (chr(number - 26));      
+      number := 32
     end
     else
-      outputSymbol := (chr(number));
+      number := (((ord(symbol1) + shift1) - 18) mod 26) + 96; 
+    outputSymbol := chr(number);
     outletText1 := outletText1 + outputSymbol;
     cipher := outletText1;
   end;
 end;
 
-function decipher(shift1: integer; inputText1: string): string;{Ð—Ð°ÑˆÐ¸Ñ„Ñ€Ð¾Ð²ÐºÐ° }   
+
+
+function decipher(shift1: integer; inputText1: string): string;{Çàøèôðîâêà }   
 var
   number: byte;
   i: integer;
@@ -33,39 +34,35 @@ var
   outputSymbol: char;
   outletText1: string;
 begin
-  writeln('Ð¨Ð¸Ñ„Ñ€==> ');
   i := 1;
   for i := 1 to length(inputText1) do
   begin
     symbol1 := inputText1[i];
-    number := ord(symbol1) - shift1; 
-    if number < 97 then
-    begin
-      outputSymbol := (chr(number + 26));      
-    end
+    if ord(symbol1) = 32 then number := 32
     else
-      outputSymbol := (chr(number));
+      number := (((ord(symbol1) - shift1) - 19) mod 26) + 97; 
+    outputSymbol := chr(number);
     outletText1 := outletText1 + outputSymbol;
     decipher := outletText1;
   end;
 end;
 
+
 var
-  symbol: char;
   choose: integer;
   shift: integer;
   inputText, outletText: string;
 
 begin
-  writeln('ÐÐ°Ð¿Ð¸ÑˆÐ¸Ñ‚Ðµ ÐºÐ¾Ð»-Ð²Ð¾ ÑÐ¼ÐµÑ‰ÐµÐ½Ð¸Ð¹. ');
+  writeln('Íàïèøèòå êîë-âî ñìåùåíèé. ');
   readln(shift);
-  writeln('ÐÐ°Ð¿Ð¸ÑˆÐ¸Ñ‚Ðµ Ñ‚ÐµÐºÑÑ‚. ÐŸÑ€Ð¾Ð±ÐµÐ»Ñ‹ Ð±ÑƒÐ´ÑƒÑ‚ Ð·Ð°Ð¼ÐµÐ½ÑÑ‚ÑÑ Ð´Ñ€ÑƒÐ³Ð¸Ð¼Ð¸ ÑÐ¸Ð¼Ð²Ð¾Ð»Ð°Ð¼Ð¸.');
+  writeln('Íàïèøèòå òåêñò. Ïðîáåëû áóäóò çàìåíÿòñÿ äðóãèìè ñèìâîëàìè.');
   readln(inputText);
-  writeln('Ð’Ñ‹Ð±ÐµÑ€ÐµÑ‚Ðµ  Ñ‡Ñ‚Ð¾ Ð²Ñ‹ Ñ…Ð¾Ñ‚Ð¸Ñ‚Ðµ ÑÐ´ÐµÐ»Ð°Ñ‚ÑŒ, Ð·Ð°ÑˆÐ¸Ñ„Ñ€Ð¾Ð²Ð°Ñ‚ÑŒ ( Ð½Ð°Ð¿Ð¸ÑˆÐ¸Ñ‚Ðµ 1) Ð¸Ð»Ð¸ Ñ€Ð°ÑÑˆÐ¸Ñ„Ñ€Ð¾Ð²Ð°Ñ‚ÑŒ (Ð½Ð°Ð¿Ð¸ÑˆÐ¸Ñ‚Ðµ 2 ) Ñ‚ÐµÐºÑÑ‚. Ð—Ð°ÑˆÐ¸Ñ„Ñ€Ð¾Ð²Ñ‹Ð²Ð°ÐµÑ‚ÑÑ Ñ‚Ð¾Ð»ÑŒÐºÐ¾ Ð°Ð½Ð³Ð». Ð°Ð»Ñ„Ð°Ð²Ð¸Ñ‚.');
+  writeln('Çàøèôðîâàòü-1, Äåøèôðîâàòü-2.Òîëüêî àíãë. àëôàâèò.');
   readln(choose);
-  if choose  <2  then
+  if choose < 2 then
     outletText := cipher(shift, inputText)
   else
-    outletText := decipher(shift, inputText);
+    outletText := decipher(shift, inputText );
   writeln(outletText);
 end.
